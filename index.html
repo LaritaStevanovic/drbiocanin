@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (max-width: 768px) { html { scroll-padding-top: 70px; } }
+    body { font-family: 'Public Sans', system-ui, sans-serif; color: #16202a; background: #ffffff; -webkit-font-smoothing: antialiased; line-height: 1.55; }
+    a { color: #0b73c8; text-decoration: none; }
+    a:hover { color: #1697e8; }
+    img { display: block; max-width: 100%; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+    section { padding: 96px 0; }
+    @keyframes heroFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+    @keyframes heroGlow { 0%,100% { transform: scale(0.92); opacity: 0.45; } 50% { transform: scale(1.06); opacity: 0.75; } }
+    @keyframes heroSpin { to { transform: rotate(360deg); } }
+    @keyframes drawArrow {
+      0% { stroke-dashoffset: 100; opacity: 0; }
+      4% { opacity: 1; }
+      26% { stroke-dashoffset: 0; opacity: 1; }
+      74% { stroke-dashoffset: 0; opacity: 1; }
+      86% { stroke-dashoffset: 0; opacity: 0; }
+      100% { stroke-dashoffset: 100; opacity: 0; }
+    }
+    .hero-logo-stage { animation: heroFloat 5.5s ease-in-out infinite; }
+    .hero-glow { animation: heroGlow 5.5s ease-in-out infinite; }
+    .hero-orbit { animation: heroSpin 9s linear infinite; }
+    .hero-arrow-path { stroke-dasharray: 100; stroke-dashoffset: 100; animation: drawArrow 5s ease-in-out infinite; filter: drop-shadow(0 0 4px rgba(120,205,255,0.7)); }
+    @media (prefers-reduced-motion: reduce) { .hero-logo-stage, .hero-glow, .hero-orbit, .hero-arrow-path { animation: none !important; } .hero-arrow-path { display: none; } }
+    .nav-call .nav-call-num { display: none; }
+    .nav-call:hover .nav-call-label { display: none; }
+    .nav-call:hover .nav-call-num { display: inline; }
+    @keyframes btnSheen { 0% { left: -60%; } 100% { left: 130%; } }
+    .cta-sheen { position: relative; overflow: hidden; }
+    .cta-sheen::after { content: ""; position: absolute; top: 0; left: -60%; width: 45%; height: 100%; background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%); transform: skewX(-18deg); pointer-events: none; opacity: 0; }
+    .cta-sheen:hover::after { opacity: 1; animation: btnSheen 0.7s ease; }
+    @media (max-width: 768px) {
+      section { padding: 56px 0; }
+      .wrap { padding: 0 20px; }
+      .nav-links { display: none !important; }
+      .nav-toggle { display: inline-flex !important; }
+      .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+      #pocetna { display: block !important; min-height: 0 !important; padding-top: 0 !important; padding-bottom: 40px !important; }
+      #pocetna .wrap { padding-top: 44px !important; }
+      .hero-photo { position: static !important; width: 100vw !important; margin-left: 50% !important; transform: translateX(-50%) !important; height: 280px !important; object-fit: cover !important; object-position: center top !important; border-radius: 0 !important; margin-top: 0 !important; border-top: 3px solid #7ec97f !important; }
+      header > .wrap { height: 64px !important; padding-left: 0; }
+      header img { height: 54px !important; }
+      header .wrap a span { font-size: 15px !important; margin-left: -8px !important; }
+      .hero-veil { display: none !important; }
+      .hero-h1 { font-size: 40px !important; }
+      .about-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+      #o-nama { min-height: 0 !important; }
+      .services-grid { display: flex !important; grid-template-columns: none !important; align-items: stretch; overflow-x: auto; gap: 10px !important; scroll-snap-type: x mandatory; scroll-padding-left: 10px; -webkit-overflow-scrolling: touch; margin: 0 !important; padding: 10px 0 4px; scrollbar-width: none; }
+      .services-grid::-webkit-scrollbar { display: none; }
+      .services-grid > * { flex: 0 0 auto; width: 150px; scroll-snap-align: none; padding: 22px 20px 48px !important; position: relative; height: 216px; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease !important; }
+      .services-grid > *:first-child { margin-left: 10px; }
+      .services-grid > *:last-child { margin-right: 10px; }
+      .services-grid > *:nth-child(odd) { scroll-snap-align: start; }
+      .services-grid > *:hover { border-color: #e2e8ec !important; transform: none !important; }
+      .services-grid > *:active { transform: scale(0.98) !important; }
+      .services-grid h3 { font-size: 17px !important; line-height: 1.25 !important; }
+      .services-grid .svc-desc { display: none !important; }
+      .services-grid .svc-hint { display: block; position: absolute; left: 18px; bottom: 18px; }
+      .contact-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+      .hero-cta { flex-wrap: wrap; }
+      #cenovnik > .wrap > div:nth-child(2) { grid-template-columns: 1fr !important; }
+      .tier-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+      #cenovnik { padding-top: 44px !important; padding-bottom: 44px !important; }
+      #cenovnik .wrap > div:first-child { margin-bottom: 28px !important; }
+      #cenovnik h2 { font-size: 30px !important; }
+      #cenovnik .wrap > div:first-child p { font-size: 15px !important; }
+      .tier-card { padding: 22px 24px !important; }
+      .tier-featured { margin-top: 8px; padding: 26px 24px 24px !important; }
+      .tier-card > div:first-child { width: 44px !important; height: 44px !important; margin-bottom: 16px !important; }
+      .tier-card > div:first-child svg { width: 24px !important; height: 24px !important; }
+      .tier-card h3 { font-size: 19px !important; margin-bottom: 10px !important; }
+      .tier-card > div:nth-of-type(2) { font-size: 30px !important; }
+      .tier-card > div:nth-of-type(3) { margin-bottom: 4px !important; }
+      .tier-arrow { display: none !important; }
+      .tier-card { cursor: pointer; }
+      .reveal .services-grid > *, .reveal .tier-grid > * { opacity: 0; transform: translateY(28px); transition: opacity .55s ease, transform .55s ease; }
+      .reveal.in .services-grid > *, .reveal.in .tier-grid > * { opacity: 1; transform: none; }
+      .reveal.in .services-grid > *:nth-child(1), .reveal.in .tier-grid > *:nth-child(1) { transition-delay: .08s; }
+      .reveal.in .services-grid > *:nth-child(2), .reveal.in .tier-grid > *:nth-child(2) { transition-delay: .2s; }
+      .reveal.in .services-grid > *:nth-child(3), .reveal.in .tier-grid > *:nth-child(3) { transition-delay: .32s; }
+      .reveal.in .services-grid > *:nth-child(4) { transition-delay: .44s; }
+      .reveal.in .services-grid > *:nth-child(5) { transition-delay: .56s; }
+      .reveal.in .services-grid > *:nth-child(6) { transition-delay: .68s; }
+      .footer-wrap { padding: 26px 20px !important; flex-direction: column !important; justify-content: center !important; gap: 12px !important; }
+      .footer-name { display: none !important; }
+      .footer-copy { text-align: center !important; }
+      .tier-card .tier-list { display: none !important; }
+      .tier-card.open .tier-list { display: flex !important; }
+      .tier-card.open .tier-chev { transform: rotate(180deg); }
+    }
+    @keyframes fillUp { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+    @keyframes drawerIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+    .reveal { opacity: 0; transform: translateY(34px); transition: opacity .7s ease, transform .7s ease; }
+    .svc-hint { display: none; }
+    .svc-dots { display: none; }
+    @media (max-width: 768px) { .svc-dots { display: flex !important; } }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1 !important; transform: none !important; } }
+    @keyframes splashOut { to { opacity: 0; visibility: hidden; } }
+    .splash { position: fixed; inset: 0; z-index: 999; display: flex; align-items: center; justify-content: center; background: #ffffff; }
+    .splash.done { animation: splashOut 0.5s ease forwards; }
+    .splash-wrap { position: relative; width: 400px; height: 400px; max-width: 70vw; max-height: 70vw; }
+    .splash-base, .splash-fill { position: absolute; inset: 0; background-image: url(assets/logo.png); background-size: contain; background-position: center; background-repeat: no-repeat; }
+    .splash-base { opacity: 0.2; filter: grayscale(1) brightness(1.6); }
+    .splash-fill { animation: fillUp 1.4s ease-in-out infinite; }
+  </style>
+</helmet>
+
+<div style="background:#ffffff;">
+
+  <template id="__bundler_thumbnail">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#0b3a66"/><path d="M50 30c-6-5-13-6-19-4-6 3-10 10-10 19 0 8 2 14 4 22 2 7 3 18 8 18 5 0 5-10 7-17 1-6 2-11 5-11s4 5 5 11c2 7 2 17 7 17 5 0 6-11 8-18 2-8 4-14 4-22 0-9-4-16-10-19-6-2-13-1-19 4z" fill="#fff"/></svg>
+  </template>
+
+  <div class="splash" id="splash">
+    <div class="splash-wrap">
+      <div class="splash-base"></div>
+      <div class="splash-fill"></div>
+    </div>
+  </div>
+
+  <header style="position:sticky; top:0; z-index:50; background:rgba(11,58,102,0.86); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid rgba(22,151,232,0.35);">
+    <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; height:86px; padding-left:0;">
+      <a href="#pocetna" onClick="{{ scrollTop }}" style="display:flex; align-items:center; gap:0; color:#ffffff; margin-left:-6px;">
+        <img src="assets/logo.png" alt="Logo ordinacije Dr. Biočanin" style="height:62px; width:auto;">
+        <span style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:18px; letter-spacing:-0.01em; color:#ffffff; margin-top:-4px;">Dr. Biočanin</span>
+      </a>
+      <nav class="nav-links" style="display:flex; align-items:center; gap:34px;">
+        <a href="#usluge" data-spy="usluge" style="color:#c7d3db; font-weight:500; transition:color .15s;" style-hover="color:#5db4f0;">Usluge</a>
+        <a href="#cenovnik" data-spy="cenovnik" style="color:#c7d3db; font-weight:500; transition:color .15s;" style-hover="color:#5db4f0;">Cenovnik</a>
+        <a href="#o-nama" data-spy="o-nama" style="color:#c7d3db; font-weight:500; transition:color .15s;" style-hover="color:#5db4f0;">O nama</a>
+        <a href="#kontakt" data-spy="kontakt" style="color:#c7d3db; font-weight:500; transition:color .15s;" style-hover="color:#5db4f0;">Kako do nas</a>
+        <a href="tel:0113328131" onClick="{{ openContact }}" class="nav-call cta-sheen" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; background:#0b73c8; color:#fff; font-weight:600; padding:11px 20px; border-radius:8px; cursor:pointer; transition:background .15s;" style-hover="background:#1697e8;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          Kontaktirajte nas
+        </a>
+      </nav>
+      <button class="nav-toggle" onClick="{{ toggleMenu }}" aria-label="Meni" style="display:none; align-items:center; justify-content:center; width:44px; height:44px; border:1px solid #274157; border-radius:8px; background:transparent; cursor:pointer;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c7d3db" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="20" y2="17"></line></svg>
+      </button>
+    </div>
+  </header>
+
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeMenu }}" style="position:fixed; inset:0; z-index:200; background:rgba(11,34,52,0.55);">
+      <div onClick="{{ stop }}" style="position:absolute; top:0; right:0; height:100%; width:78%; max-width:320px; background:#0e2230; box-shadow:-12px 0 40px rgba(0,0,0,0.35); display:flex; flex-direction:column; padding:22px 24px; animation:drawerIn .28s ease;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;">
+          <span style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:16px; color:#fff;">Meni</span>
+          <button onClick="{{ closeMenu }}" aria-label="Zatvori" style="width:40px; height:40px; display:flex; align-items:center; justify-content:center; border:1px solid #274157; border-radius:8px; background:transparent; cursor:pointer;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c7d3db" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+          </button>
+        </div>
+        <a href="#usluge" data-spy-m="usluge" onClick="{{ closeMenu }}" style="padding:15px 0; color:#c7d3db; font-weight:500; font-size:17px; border-bottom:1px solid #1b3547;">Usluge</a>
+        <a href="#cenovnik" data-spy-m="cenovnik" onClick="{{ closeMenu }}" style="padding:15px 0; color:#c7d3db; font-weight:500; font-size:17px; border-bottom:1px solid #1b3547;">Cenovnik</a>
+        <a href="#o-nama" data-spy-m="o-nama" onClick="{{ closeMenu }}" style="padding:15px 0; color:#c7d3db; font-weight:500; font-size:17px; border-bottom:1px solid #1b3547;">O nama</a>
+        <a href="#kontakt" data-spy-m="kontakt" onClick="{{ closeMenu }}" style="padding:15px 0; color:#c7d3db; font-weight:500; font-size:17px; border-bottom:1px solid #1b3547;">Kako do nas</a>
+        <a href="tel:0113328131" style="margin-top:24px; display:flex; align-items:center; justify-content:center; gap:8px; background:#0b73c8; color:#fff; font-weight:600; font-size:16px; padding:14px 20px; border-radius:8px;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          Pozovite 011 3328131
+        </a>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ contactOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeContact }}" style="position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center; padding:24px; background:rgba(11,34,52,0.45); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);">
+      <div onClick="{{ stop }}" style="position:relative; width:100%; max-width:420px; background:rgba(255,255,255,0.9); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.6); border-radius:14px; padding:34px 32px; box-shadow:0 20px 60px rgba(11,34,52,0.28);">
+        <button onClick="{{ closeContact }}" aria-label="Zatvori" style="position:absolute; top:14px; right:14px; width:34px; height:34px; display:flex; align-items:center; justify-content:center; border:none; background:transparent; cursor:pointer; color:#4a5964; border-radius:8px;" style-hover="background:rgba(11,34,52,0.06);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+        </button>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:22px; color:#123246; margin-bottom:22px;">Kontaktirajte nas</div>
+        <div style="display:flex; flex-direction:column; gap:18px;">
+          <div style="display:flex; gap:13px; align-items:flex-start;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0b73c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <div><div style="font-size:13px; color:#6a7883; margin-bottom:2px;">Telefon</div><a href="tel:0113328131" style="font-size:17px; font-weight:600; color:#0b73c8;">011 3328131</a></div>
+          </div>
+          <div style="display:flex; gap:13px; align-items:flex-start;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0b73c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <div><div style="font-size:13px; color:#6a7883; margin-bottom:2px;">Adresa</div><div style="font-size:16px; font-weight:600; color:#16202a;">Ranka Miljića 81, Borča</div></div>
+          </div>
+          <div style="display:flex; gap:13px; align-items:flex-start;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0b73c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg>
+            <div><div style="font-size:13px; color:#6a7883; margin-bottom:2px;">Radno vreme</div><div style="font-size:16px; font-weight:600; color:#16202a;">Svaki radni dan 09-19h</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ tierModal }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeTier }}" style="position:fixed; inset:0; z-index:200; display:flex; align-items:center; justify-content:center; padding:24px; background:rgba(11,34,52,0.45); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);">
+      <div onClick="{{ stop }}" style="position:relative; width:100%; max-width:420px; background:{{ tierModal.modalBg }}; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border:1px solid {{ tierModal.modalBorder }}; border-radius:14px; padding:32px 30px; box-shadow:0 20px 60px rgba(11,34,52,0.28);">
+        <button onClick="{{ closeTier }}" aria-label="Zatvori" style="position:absolute; top:14px; right:14px; width:34px; height:34px; display:flex; align-items:center; justify-content:center; border:none; background:transparent; cursor:pointer; color:{{ tierModal.subCol }}; border-radius:8px;" style-hover="background:rgba(11,34,52,0.06);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+        </button>
+        <div style="width:52px; height:52px; border-radius:12px; background:#0b73c8; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
+          <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="{{ tierModal.icon }}"></path></svg>
+        </div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:22px; color:{{ tierModal.titleCol }}; margin-bottom:4px;">{{ tierModal.title }}</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:18px; color:{{ tierModal.accentCol }}; margin-bottom:20px;">{{ tierModal.price }}</div>
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <sc-for list="{{ tierModal.features }}" as="f" hint-placeholder-count="5">
+            <div style="display:flex; gap:12px; align-items:flex-start;">
+              <span style="width:22px; height:22px; border-radius:50%; background:{{ tierModal.checkBg }}; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="{{ tierModal.checkCol }}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </span>
+              <span style="font-size:15px; color:{{ tierModal.nameCol }};">{{ f }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ svcModal }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeSvc }}" style="position:fixed; inset:0; z-index:200; display:flex; align-items:center; justify-content:center; padding:24px; background:rgba(11,34,52,0.45); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);">
+      <div onClick="{{ stop }}" style="position:relative; width:100%; max-width:420px; background:rgba(255,255,255,0.92); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.6); border-radius:14px; padding:32px 30px; box-shadow:0 20px 60px rgba(11,34,52,0.28);">
+        <button onClick="{{ closeSvc }}" aria-label="Zatvori" style="position:absolute; top:14px; right:14px; width:34px; height:34px; display:flex; align-items:center; justify-content:center; border:none; background:transparent; cursor:pointer; color:#4a5964; border-radius:8px;" style-hover="background:rgba(11,34,52,0.06);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+        </button>
+        <div style="width:52px; height:52px; border-radius:12px; background:#eafaef; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
+          <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="#2f9a45" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ svcModal.icon }}"></path></svg>
+        </div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:22px; color:#123246; margin-bottom:12px;">{{ svcModal.title }}</div>
+        <p style="font-size:16px; color:#546069; text-wrap:pretty; line-height:1.6;">{{ svcModal.desc }}</p>
+        <a href="tel:0113328131" style="margin-top:24px; display:flex; align-items:center; justify-content:center; gap:8px; background:#0b73c8; color:#fff; font-weight:600; font-size:16px; padding:14px 20px; border-radius:8px;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          Zakažite termin
+        </a>
+      </div>
+    </div>
+  </sc-if>
+
+  <section id="pocetna" style="position:relative; overflow:hidden; min-height:calc(100vh - 87px); display:flex; align-items:center; padding-top:64px; padding-bottom:64px; border-top:1px solid #17384d; box-shadow:inset 0 1px 0 rgba(255,255,255,0.06); background:#ffffff;">
+    <img class="hero-photo" src="assets/hero.jpg" alt="Nasmejana pacijentkinja" style="position:absolute; top:0; right:0; height:100%; width:auto; max-width:none; object-fit:cover; object-position:left center; z-index:0;">
+    <div class="hero-veil" style="position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(90deg, #ffffff 0%, rgba(255,255,255,0.92) 34%, rgba(255,255,255,0.15) 58%, rgba(255,255,255,0) 72%);"></div>
+    <div class="wrap" style="width:100%; position:relative; z-index:2;">
+      <div class="hero-grid" style="display:grid; grid-template-columns:1fr; gap:64px; align-items:stretch;">
+        <div style="max-width:560px;">
+          <div style="display:inline-flex; align-items:center; gap:8px; background:#eef6fd; color:#0b73c8; font-weight:600; font-size:14px; padding:7px 14px; border-radius:999px; margin-bottom:24px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#39a84e;"></span>
+            17 godina sa vama
+          </div>
+          <h1 class="hero-h1" style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:56px; line-height:1.06; letter-spacing:-0.02em; margin-bottom:22px; color:#2a4a60; text-wrap:pretty;">Briga o vašem <span style="color:#0b73c8;">osmehu</span> počinje ovde.</h1>
+          <p style="font-size:19px; color:#4a5964; max-width:52ch; margin-bottom:34px; text-wrap:pretty;">Ordinacija Dr. Biočanin. Od običnog pregleda do krunice i izbeljivanja. Radimo mirno, i bez bola.</p>
+          <div class="hero-cta" style="display:flex; align-items:center; gap:14px;">
+            <a href="#cenovnik" class="cta-sheen" style="display:inline-flex; align-items:center; gap:10px; background:#0b73c8; color:#fff; font-weight:600; font-size:16px; padding:15px 28px; border-radius:8px; transition:background .15s, transform .15s, box-shadow .15s;" style-hover="background:#1697e8; transform:translateY(-1px); box-shadow:0 6px 18px rgba(11,115,200,0.28);">
+              Pogledajte cenovnik
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="usluge" class="reveal" style="background:#f6f9fb; border-top:1px solid #e6ecf0; border-bottom:1px solid #e6ecf0;">
+    <div class="wrap">
+      <div style="max-width:600px; margin-bottom:52px;">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:14px; letter-spacing:0.08em; text-transform:uppercase; color:#39a84e; margin-bottom:14px;">Usluge</div>
+        <h2 style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:38px; line-height:1.12; letter-spacing:-0.02em; margin-bottom:16px;">Šta radimo</h2>
+        <p style="font-size:18px; color:#4a5964; text-wrap:pretty;">Šest stvari zbog kojih ljudi najčešće dolaze. Ako niste sigurni šta vam treba, pozovite i pitajte.</p>
+      </div>
+      <div class="services-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+        <sc-for list="{{ services }}" as="svc" hint-placeholder-count="6">
+          <div onClick="{{ openSvc }}" data-idx="{{ $index }}" style="background:#fff; border:1px solid #e2e8ec; border-radius:12px; padding:30px 28px; transition:border-color .15s, transform .15s;" style-hover="border-color:#1697e8; transform:scale(1.04);">
+            <div style="width:46px; height:46px; border-radius:10px; background:#eafaef; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2f9a45" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ svc.icon }}"></path></svg>
+            </div>
+            <h3 style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:20px; margin-bottom:10px; letter-spacing:-0.01em;">{{ svc.title }}</h3>
+            <p class="svc-desc" style="font-size:16px; color:#546069; text-wrap:pretty;">{{ svc.desc }}</p>
+            <span class="svc-hint" style="font-size:14px; color:#0b73c8; font-weight:600;">Dodirni za više</span>
+          </div>
+        </sc-for>
+      </div>
+      <div class="svc-dots" style="justify-content:center; gap:10px; margin-top:18px;">
+        <span class="svc-dot" data-page="0" onClick="{{ goPage }}" style="width:9px; height:9px; border-radius:50%; background:#0b73c8; cursor:pointer; transition:background .2s;"></span>
+        <span class="svc-dot" data-page="1" onClick="{{ goPage }}" style="width:9px; height:9px; border-radius:50%; background:#cdd8e0; cursor:pointer; transition:background .2s;"></span>
+        <span class="svc-dot" data-page="2" onClick="{{ goPage }}" style="width:9px; height:9px; border-radius:50%; background:#cdd8e0; cursor:pointer; transition:background .2s;"></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="cenovnik" class="reveal">
+    <div class="wrap">
+      <div style="max-width:640px; margin:0 auto 52px; text-align:center;">
+        <h2 style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:40px; line-height:1.1; letter-spacing:-0.02em; margin-bottom:16px; color:#123246;">Cene po vrsti tretmana</h2>
+        <p style="font-size:18px; color:#4a5964; text-wrap:pretty;">Tri grupe pokrivaju skoro sve zbog čega dolazite. Ovo su početne cene, tačan iznos kažemo posle pregleda.</p>
+      </div>
+
+      <div class="tier-grid" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:22px; align-items:stretch;">
+
+        <div class="tier-card" onClick="{{ openTier }}" data-tier="0" style="display:flex; flex-direction:column; background:#f6faff; border:2px solid #0b73c8; border-radius:20px; padding:34px 32px; transition:transform .2s, box-shadow .2s;" style-hover="transform:scale(1.05); box-shadow:0 18px 44px rgba(11,58,102,0.16);">
+          <div style="width:52px; height:52px; border-radius:14px; background:#0b73c8; display:flex; align-items:center; justify-content:center; margin-bottom:26px;">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4c-1.3-1.2-3-1.6-4.5-1.1C5.6 3.5 4.5 5.4 4.5 7.9c0 1.7.4 3.3.9 5.1.4 1.6.6 4.5 1.8 4.5 1.1 0 1.3-2.3 1.6-4.2.3-1.5.5-2.9 1.2-2.9s.9 1.4 1.2 2.9c.3 1.9.5 4.2 1.6 4.2 1.2 0 1.4-2.9 1.8-4.5.5-1.8.9-3.4.9-5.1 0-2.5-1.1-4.4-3-4.9C15 2.4 13.3 2.8 12 4z"></path></svg>
+          </div>
+          <h3 style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:23px; letter-spacing:-0.01em; margin-bottom:18px; color:#123246;">Pregled i osnovna nega</h3>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:38px; letter-spacing:-0.02em; color:#0b73c8; line-height:1;">od 1.500 din</div>
+          <div style="font-size:14px; color:#6a7883; margin-top:8px; margin-bottom:26px;">početna cena</div>
+          <button class="tier-arrow" onClick="{{ toggleTier }}" aria-label="Prikaži cene" style="display:none; margin-top:20px; width:100%; align-items:center; justify-content:center; gap:6px; background:transparent; border:1px solid #d6e6f5; border-radius:8px; padding:10px; cursor:pointer; color:#0b73c8; font-weight:600; font-size:14px;"><span>Prikaži</span><svg class="tier-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0b73c8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+          <div class="tier-list" style="border-top:1px solid #d6e6f5; padding-top:24px; display:flex; flex-direction:column; gap:15px;">
+            <sc-for list="{{ tier1 }}" as="f" hint-placeholder-count="5">
+              <div style="display:flex; gap:12px; align-items:flex-start;">
+                <span style="width:20px; height:20px; border-radius:50%; background:#0b73c8; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+                <span style="font-size:15px; color:#2c3a44;">{{ f }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div class="tier-card tier-featured" onClick="{{ openTier }}" data-tier="1" style="position:relative; display:flex; flex-direction:column; background:#0e2230; border:2px solid #0e2230; border-radius:20px; padding:34px 32px; box-shadow:0 20px 50px rgba(11,58,102,0.22); transition:transform .2s;" style-hover="transform:scale(1.06);">
+          <div style="width:52px; height:52px; border-radius:14px; background:#0b73c8; display:flex; align-items:center; justify-content:center; margin-bottom:26px;">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 5.2C9.4 4.2 7.9 3.9 6.7 4.3 5.2 4.8 4.3 6.4 4.3 8.5c0 1.4.3 2.8.8 4.3.3 1.4.5 3.8 1.5 3.8.9 0 1.1-2 1.3-3.6.3-1.3.4-2.5 1-2.5s.8 1.2 1 2.5c.3 1.6.4 3.6 1.4 3.6.9 0 1.2-2.4 1.5-3.8.4-1.5.7-2.9.7-4.3 0-2.1-.9-3.7-2.4-4.2-1.2-.4-2.6-.1-3.8.9z"></path><path d="M18.4 4.1l.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6z"></path><path d="M20.3 9.6l.4 1.2 1.2.4-1.2.4-.4 1.2-.4-1.2-1.2-.4 1.2-.4z"></path></svg>
+          </div>
+          <h3 style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:23px; letter-spacing:-0.01em; margin-bottom:18px; color:#fff;">Estetika osmeha</h3>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:38px; letter-spacing:-0.02em; color:#fff; line-height:1;">od 15.000 din</div>
+          <div style="font-size:14px; color:#8fa1ad; margin-top:8px; margin-bottom:26px;">početna cena</div>
+          <button class="tier-arrow" onClick="{{ toggleTier }}" aria-label="Prikaži cene" style="display:none; margin-top:20px; width:100%; align-items:center; justify-content:center; gap:6px; background:transparent; border:1px solid #1f3a4d; border-radius:8px; padding:10px; cursor:pointer; color:#5db4f0; font-weight:600; font-size:14px;"><span>Prikaži</span><svg class="tier-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5db4f0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+          <div class="tier-list" style="border-top:1px solid #1f3a4d; padding-top:24px; display:flex; flex-direction:column; gap:15px;">
+            <sc-for list="{{ tier2 }}" as="f" hint-placeholder-count="5">
+              <div style="display:flex; gap:12px; align-items:flex-start;">
+                <span style="width:20px; height:20px; border-radius:50%; background:#0b73c8; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+                <span style="font-size:15px; color:#c7d3db;">{{ f }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div class="tier-card" onClick="{{ openTier }}" data-tier="2" style="display:flex; flex-direction:column; background:#f6faff; border:2px solid #0b73c8; border-radius:20px; padding:34px 32px; transition:transform .2s, box-shadow .2s;" style-hover="transform:scale(1.05); box-shadow:0 18px 44px rgba(11,58,102,0.16);">
+          <div style="width:52px; height:52px; border-radius:14px; background:#0b73c8; display:flex; align-items:center; justify-content:center; margin-bottom:26px;">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.2 4h7.6l-1.1 5H9.3z"></path><path d="M9.6 9l.7 7a1.7 1.7 0 0 0 3.4 0l.7-7"></path><line x1="9.9" y1="11.4" x2="14.1" y2="11.4"></line><line x1="10.1" y1="13.3" x2="13.9" y2="13.3"></line><line x1="10.4" y1="15.2" x2="13.6" y2="15.2"></line></svg>
+          </div>
+          <h3 style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:23px; letter-spacing:-0.01em; margin-bottom:18px; color:#123246;">Protetika i hirurgija</h3>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:38px; letter-spacing:-0.02em; color:#0b73c8; line-height:1;">od 6.000 din</div>
+          <div style="font-size:14px; color:#6a7883; margin-top:8px; margin-bottom:26px;">početna cena</div>
+          <button class="tier-arrow" onClick="{{ toggleTier }}" aria-label="Prikaži cene" style="display:none; margin-top:20px; width:100%; align-items:center; justify-content:center; gap:6px; background:transparent; border:1px solid #d6e6f5; border-radius:8px; padding:10px; cursor:pointer; color:#0b73c8; font-weight:600; font-size:14px;"><span>Prikaži</span><svg class="tier-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0b73c8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+          <div class="tier-list" style="border-top:1px solid #d6e6f5; padding-top:24px; display:flex; flex-direction:column; gap:15px;">
+            <sc-for list="{{ tier3 }}" as="f" hint-placeholder-count="5">
+              <div style="display:flex; gap:12px; align-items:flex-start;">
+                <span style="width:20px; height:20px; border-radius:50%; background:#0b73c8; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+                <span style="font-size:15px; color:#2c3a44;">{{ f }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="o-nama" class="reveal" style="min-height:100vh; display:flex; align-items:center; background:#f6f9fb; border-top:1px solid #e6ecf0; border-bottom:1px solid #e6ecf0;">
+    <div class="wrap" style="width:100%;">
+      <div class="about-grid" style="display:grid; grid-template-columns:1fr 1.1fr; gap:56px; align-items:center; min-height:0;">
+        <div style="aspect-ratio:4/5; border:1px solid #dde4e9; border-radius:12px; overflow:hidden;">
+          <img src="assets/doktor.jpg" alt="Dr. Biočanin" style="width:100%; height:100%; object-fit:cover; object-position:center;">
+        </div>
+        <div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:14px; letter-spacing:0.08em; text-transform:uppercase; color:#39a84e; margin-bottom:14px;">O nama</div>
+          <h2 style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:38px; line-height:1.12; letter-spacing:-0.02em; margin-bottom:20px; text-wrap:pretty;">Isti doktor, isto mesto, sedamnaest godina.</h2>
+          <p style="font-size:18px; color:#4a5964; max-width:60ch; margin-bottom:18px; text-wrap:pretty;">Ordinacija Dr. Biočanin radi od 2009. Ista adresa, isti čovek koji vas leči. Mnogi pacijenti se vraćaju godinama i dovode celu porodicu.</p>
+          <p style="font-size:18px; color:#4a5964; max-width:60ch; margin-bottom:28px; text-wrap:pretty;">Prvo objasnimo šta se dešava, pa tek onda radimo. Bez žurbe.</p>
+          <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-top:28px;">
+            <a href="tel:0113328131" onClick="{{ openContact }}" class="cta-sheen" style="display:inline-flex; align-items:center; gap:9px; background:#0b73c8; color:#fff; font-weight:600; font-size:16px; padding:14px 24px; border-radius:8px; cursor:pointer; transition:background .15s, transform .15s;" style-hover="background:#1697e8; transform:translateY(-1px);">Zakažite pregled</a>
+            <a href="https://www.google.com/maps/place/Dr+Biocanin/@44.8842444,20.455067,17z/data=!4m17!1m8!3m7!1s0x475a637e15173817:0xd3d502166a6a2037!2zUmFua2EgTWlsamnEh2EgODEsIEJvcsSNYQ!3b1!8m2!3d44.8842444!4d20.455067!16s%2Fg%2F11kx2xyh_b!3m7!1s0x475a64bdde190725:0x91ba242a605987c2!8m2!3d44.8842163!4d20.4550018!9m1!1b1!16s%2Fg%2F11_r8mjdz?entry=ttu" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:10px; padding:14px 20px; border:1px solid #e2e8ec; border-radius:8px; background:#fff; transition:border-color .15s, transform .15s;" style-hover="border-color:#1697e8; transform:translateY(-1px);">
+              <span style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:17px; color:#123246; line-height:1;">4.9</span>
+              <span style="display:inline-flex; gap:1px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5a623"><polygon points="12,2 15,9 22,9.3 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.3 9,9"></polygon></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5a623"><polygon points="12,2 15,9 22,9.3 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.3 9,9"></polygon></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5a623"><polygon points="12,2 15,9 22,9.3 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.3 9,9"></polygon></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5a623"><polygon points="12,2 15,9 22,9.3 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.3 9,9"></polygon></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5a623"><polygon points="12,2 15,9 22,9.3 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.3 9,9"></polygon></svg>
+              </span>
+              <span style="font-size:15px; color:#0b73c8; font-weight:600; white-space:nowrap;">Pogledaj recenzije</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt" class="reveal">
+    <div class="wrap">
+      <div class="contact-grid" style="display:grid; grid-template-columns:1fr 1.2fr; gap:56px; align-items:center;">
+        <div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:14px; letter-spacing:0.08em; text-transform:uppercase; color:#39a84e; margin-bottom:14px;">Kako do nas</div>
+          <h2 style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:38px; line-height:1.12; letter-spacing:-0.02em; margin-bottom:28px;">Dođite ili pozovite</h2>
+          <div style="display:flex; flex-direction:column; gap:22px;">
+            <div style="display:flex; gap:15px;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0b73c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <div><div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:17px;">Adresa</div><div style="font-size:16px; color:#546069;">Ranka Miljića 81, Borča, Beograd</div></div>
+            </div>
+            <div style="display:flex; gap:15px;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0b73c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <div><div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:17px;">Telefon</div><a href="tel:0113328131" style="font-size:16px;">011 3328131</a></div>
+            </div>
+            <div style="display:flex; gap:15px;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0b73c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg>
+              <div><div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:17px;">Radno vreme</div><div style="font-size:16px; color:#546069;">Svaki radni dan od 09 do 19h</div></div>
+            </div>
+          </div>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=Ranka+Milji%C4%87a+81,+Bor%C4%8Da,+Beograd" target="_blank" rel="noopener" style="position:relative; display:block; aspect-ratio:16/11; border:1px solid #dde4e9; border-radius:12px; overflow:hidden;">
+          <iframe title="Mapa - Ranka Miljića 81, Borča" src="https://www.google.com/maps?q=Ranka%20Milji%C4%87a%2081%2C%20Bor%C4%8Da%2C%20Beograd&output=embed" style="width:100%; height:100%; border:0; display:block; pointer-events:none; filter:grayscale(0.4) sepia(0.35) hue-rotate(165deg) saturate(1.4) brightness(1.02);" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div style="position:absolute; inset:0; background:transparent;"></div>
+          <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-78%); pointer-events:none; filter:drop-shadow(0 4px 6px rgba(0,0,0,0.35));">
+            <svg width="56" height="70" viewBox="0 0 46 58" fill="none">
+              <path d="M23 2C11.4 2 2 11.4 2 23c0 15 21 33 21 33s21-18 21-33C44 11.4 34.6 2 23 2z" fill="#0b73c8" stroke="#fff" stroke-width="2.5"></path>
+              <g transform="translate(12.7,13) scale(0.98)">
+                <path d="M12 4c-1.3-1.2-3-1.6-4.5-1.1C5.6 3.5 4.5 5.4 4.5 7.9c0 1.7.4 3.3.9 5.1.4 1.6.6 4.5 1.8 4.5 1.1 0 1.3-2.3 1.6-4.2.3-1.5.5-2.9 1.2-2.9s.9 1.4 1.2 2.9c.3 1.9.5 4.2 1.6 4.2 1.2 0 1.4-2.9 1.8-4.5.5-1.8.9-3.4.9-5.1 0-2.5-1.1-4.4-3-4.9C15 2.4 13.3 2.8 12 4z" fill="#fff"></path>
+              </g>
+            </svg>
+          </div>
+          <div style="position:absolute; left:16px; bottom:16px; display:inline-flex; align-items:center; gap:8px; background:#0b73c8; color:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:14px; padding:9px 15px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.18);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            Otvori u Google mapama
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#0e2230; color:#c7d3db;">
+    <div class="footer-wrap" style="max-width:1100px; margin:0 auto; padding:44px 32px 44px 16px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+      <div class="footer-brand" style="display:flex; align-items:center; gap:4px;">
+        <img src="assets/logo.png" alt="Logo" style="height:60px; width:auto;">
+        <div class="footer-name">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:16px; color:#fff;">Dr. Biočanin</div>
+          <div style="font-size:14px; color:#8fa1ad;">Stomatološka ordinacija, Borča</div>
+        </div>
+      </div>
+      <div class="footer-copy" style="font-size:14px; color:#8fa1ad; text-align:right;">© 2009 Ordinacija Dr. Biočanin</div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { menuOpen: false, contactOpen: false, svcModal: null, tierModal: null };
+  componentDidMount() {
+    const hideSplash = () => {
+      const s = document.getElementById('splash');
+      if (s) s.classList.add('done');
+    };
+    if (document.readyState === 'complete') setTimeout(hideSplash, 500);
+    else window.addEventListener('load', () => setTimeout(hideSplash, 300));
+    setTimeout(hideSplash, 4000);
+    const grid = document.querySelector('.services-grid');
+    if (grid) {
+      this._grid = grid;
+      const sizeCards = () => {
+        if (!window.matchMedia('(max-width: 768px)').matches) return;
+        const cw = grid.clientWidth;
+        const w = Math.floor((cw - 30) / 2);
+        Array.from(grid.children).forEach(c => { c.style.width = w + 'px'; });
+      };
+      sizeCards();
+      window.addEventListener('resize', () => { sizeCards(); if (this._syncDots) this._syncDots(); });
+      const dots = () => Array.from(document.querySelectorAll('.svc-dot'));
+      const syncDots = () => {
+        const pages = 3;
+        const max = grid.scrollWidth - grid.clientWidth;
+        const p = max <= 0 ? 0 : Math.round((grid.scrollLeft / max) * (pages - 1));
+        dots().forEach((d, i) => {
+          d.style.background = i === p ? '#0b73c8' : '#cdd8e0';
+        });
+      };
+      this._syncDots = syncDots;
+      grid.addEventListener('scroll', () => { window.requestAnimationFrame(syncDots); }, { passive: true });
+      syncDots();
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    const links = () => Array.from(document.querySelectorAll('[data-spy]'));
+    const ids = ['usluge','cenovnik','o-nama','kontakt'];
+    links().forEach(a => a.addEventListener('click', () => {
+      this._lock = a.getAttribute('data-spy');
+      if (this._spy) this._spy();
+    }));
+    const spy = () => {
+      const y = window.scrollY + 120;
+      let active = null;
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= y) active = id;
+      }
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) active = ids[ids.length - 1];
+      if (this._lock) {
+        const t = document.getElementById(this._lock);
+        const arrived = t && Math.abs(t.offsetTop - (window.scrollY + 120)) < 40;
+        if (arrived) this._lock = null;
+        else active = this._lock;
+      }
+      links().forEach(a => {
+        const on = a.getAttribute('data-spy') === active;
+        a.style.color = on ? '#5db4f0' : '#c7d3db';
+        a.style.fontWeight = on ? '700' : '500';
+      });
+      document.querySelectorAll('[data-spy-m]').forEach(a => {
+        const on = a.getAttribute('data-spy-m') === active;
+        a.style.color = on ? '#5db4f0' : '#c7d3db';
+        a.style.fontWeight = on ? '700' : '500';
+      });
+    };
+    this._spy = spy;
+    window.addEventListener('scroll', spy, { passive: true });
+    spy();
+  }
+  componentWillUnmount() { if (this._spy) window.removeEventListener('scroll', this._spy); }
+  renderVals() {
+    const tier1 = [
+      "Stomatološki pregled i savet",
+      "Čišćenje kamenca i poliranje",
+      "Bela (estetska) plomba",
+      "Vađenje zuba bez bola",
+      "Za redovne kontrole i decu"
+    ];
+    const tier2 = [
+      "Izbeljivanje u ordinaciji",
+      "Fasete za oblik i boju",
+      "Estetske plombe u boji zuba",
+      "Popravka polomljenog zuba",
+      "Za lepši i svetliji osmeh"
+    ];
+    const tier3 = [
+      "Lečenje kanala korena",
+      "Krunice i mostovi",
+      "Pokretne i totalne proteze",
+      "Oralna hirurgija",
+      "Za kompletnu obnovu zuba"
+    ];
+    return {
+      menuOpen: this.state.menuOpen,
+      contactOpen: this.state.contactOpen,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen }), () => { if (this._spy) requestAnimationFrame(() => this._spy()); }),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      openContact: (e) => { if (e) e.preventDefault(); this.setState({ contactOpen: true, menuOpen: false }); },
+      closeContact: () => this.setState({ contactOpen: false }),
+      stop: (e) => { if (e) e.stopPropagation(); },
+      svcModal: this.state.svcModal,
+      openSvc: (e) => {
+        if (!window.matchMedia('(max-width: 768px)').matches) return;
+        const idx = parseInt(e.currentTarget.getAttribute('data-idx'), 10);
+        const list = this.renderVals().services;
+        this.setState({ svcModal: list[idx] });
+      },
+      closeSvc: () => this.setState({ svcModal: null }),
+      toggleTier: (e) => { const card = e.currentTarget.closest('.tier-card'); if (card) card.classList.toggle('open'); },
+      tierModal: this.state.tierModal,
+      openTier: (e) => {
+        if (!window.matchMedia('(max-width: 768px)').matches) return;
+        const idx = parseInt(e.currentTarget.getAttribute('data-tier'), 10);
+        const light = { modalBg: "rgba(255,255,255,0.92)", modalBorder: "rgba(255,255,255,0.6)", titleCol: "#123246", accentCol: "#0b73c8", nameCol: "#2c3a44", subCol: "#4a5964", lineCol: "#eef2f5", checkBg: "#0b73c8", checkCol: "#ffffff" };
+        const dark = { modalBg: "#0e2230", modalBorder: "#1f3a4d", titleCol: "#ffffff", accentCol: "#5db4f0", nameCol: "#c7d3db", subCol: "#8fa1ad", lineCol: "#1f3a4d", checkBg: "#0b73c8", checkCol: "#ffffff" };
+        const meta = [
+          { ...light, title: "Pregled i osnovna nega", price: "od 1.500 din", icon: "M12 4c-1.3-1.2-3-1.6-4.5-1.1C5.6 3.5 4.5 5.4 4.5 7.9c0 1.7.4 3.3.9 5.1.4 1.6.6 4.5 1.8 4.5 1.1 0 1.3-2.3 1.6-4.2.3-1.5.5-2.9 1.2-2.9s.9 1.4 1.2 2.9c.3 1.9.5 4.2 1.6 4.2 1.2 0 1.4-2.9 1.8-4.5.5-1.8.9-3.4.9-5.1 0-2.5-1.1-4.4-3-4.9C15 2.4 13.3 2.8 12 4z", features: tier1 },
+          { ...dark, title: "Estetika osmeha", price: "od 15.000 din", icon: "M10.5 5.2C9.4 4.2 7.9 3.9 6.7 4.3 5.2 4.8 4.3 6.4 4.3 8.5c0 1.4.3 2.8.8 4.3.3 1.4.5 3.8 1.5 3.8.9 0 1.1-2 1.3-3.6.3-1.3.4-2.5 1-2.5s.8 1.2 1 2.5c.3 1.6.4 3.6 1.4 3.6.9 0 1.2-2.4 1.5-3.8.4-1.5.7-2.9.7-4.3 0-2.1-.9-3.7-2.4-4.2-1.2-.4-2.6-.1-3.8.9z", features: tier2 },
+          { ...light, title: "Protetika i hirurgija", price: "od 6.000 din", icon: "M8.2 4h7.6l-1.1 5H9.3z M9.6 9l.7 7a1.7 1.7 0 0 0 3.4 0l.7-7", features: tier3 }
+        ];
+        this.setState({ tierModal: meta[idx] });
+      },
+      closeTier: () => this.setState({ tierModal: null }),
+      toggleAcc: (e) => { const item = e.currentTarget.closest('.acc-item'); if (item) item.classList.toggle('open'); },
+      priceList: [
+        { title: "Pregled i osnovna nega", icon: "M12 4c-1.3-1.2-3-1.6-4.5-1.1C5.6 3.5 4.5 5.4 4.5 7.9c0 1.7.4 3.3.9 5.1.4 1.6.6 4.5 1.8 4.5 1.1 0 1.3-2.3 1.6-4.2.3-1.5.5-2.9 1.2-2.9s.9 1.4 1.2 2.9c.3 1.9.5 4.2 1.6 4.2 1.2 0 1.4-2.9 1.8-4.5.5-1.8.9-3.4.9-5.1 0-2.5-1.1-4.4-3-4.9C15 2.4 13.3 2.8 12 4z", items: [
+          { name: "Pregled i savet", price: "od 1.500 din" },
+          { name: "Čišćenje kamenca", price: "od 2.500 din" },
+          { name: "Bela plomba", price: "od 3.000 din" },
+          { name: "Vađenje zuba", price: "od 2.500 din" }
+        ]},
+        { title: "Estetika osmeha", icon: "M10.5 5.2C9.4 4.2 7.9 3.9 6.7 4.3 5.2 4.8 4.3 6.4 4.3 8.5c0 1.4.3 2.8.8 4.3.3 1.4.5 3.8 1.5 3.8.9 0 1.1-2 1.3-3.6.3-1.3.4-2.5 1-2.5s.8 1.2 1 2.5c.3 1.6.4 3.6 1.4 3.6.9 0 1.2-2.4 1.5-3.8.4-1.5.7-2.9.7-4.3 0-2.1-.9-3.7-2.4-4.2-1.2-.4-2.6-.1-3.8.9z", items: [
+          { name: "Izbeljivanje zuba", price: "od 15.000 din" },
+          { name: "Fasete (po zubu)", price: "od 20.000 din" },
+          { name: "Estetska plomba", price: "od 3.500 din" }
+        ]},
+        { title: "Protetika i hirurgija", icon: "M8.2 4h7.6l-1.1 5H9.3z M9.6 9l.7 7a1.7 1.7 0 0 0 3.4 0l.7-7", items: [
+          { name: "Lečenje kanala korena", price: "od 6.000 din" },
+          { name: "Krunica (metalokeramika)", price: "od 12.000 din" },
+          { name: "Most (po članu)", price: "od 12.000 din" },
+          { name: "Proteza", price: "od 30.000 din" }
+        ]}
+      ],
+      goPage: (e) => {
+        const p = parseInt(e.currentTarget.getAttribute('data-page'), 10);
+        const grid = this._grid;
+        if (!grid) return;
+        const max = grid.scrollWidth - grid.clientWidth;
+        grid.scrollTo({ left: (max * p) / 2, behavior: 'smooth' });
+      },
+      scrollTop: (e) => { if (e) e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+      services: [
+        { num: "01", title: "Opšta stomatologija", desc: "Pregled, čišćenje kamenca i plomba. Ono zbog čega većina i dolazi kod zubara.", icon: "M12 4.2C10.6 2.8 8.7 2.3 7.2 3 5.6 3.7 4.7 5.5 4.7 7.6c0 1.8.5 3.4 1 5.1.4 1.6.6 4.3 1.8 4.3 1.1 0 1.3-2.1 1.6-3.9.3-1.4.5-2.7 1.1-2.7s.8 1.3 1.1 2.7c.3 1.8.5 3.9 1.6 3.9 1.2 0 1.4-2.7 1.8-4.3.5-1.7 1-3.3 1-5.1 0-2.1-.9-3.9-2.5-4.6-1.5-.7-3.4-.2-4.8 1.2z" },
+        { num: "02", title: "Estetska stomatologija", desc: "Izbeljivanje i fasete. Kad je zub zdrav ali hoćete da lepše izgleda.", icon: "M10 4l1.6 4.2L16 10l-4.4 1.8L10 16l-1.6-4.2L4 10l4.4-1.8z M17.5 13l.7 1.9 1.9.7-1.9.7-.7 1.9-.7-1.9-1.9-.7 1.9-.7z" },
+        { num: "03", title: "Vađenje i oralna hirurgija", desc: "Umnjaci i zubi koji se više ne mogu spasti. Radimo pod lokalnom anestezijom.", icon: "M9 3l1.4 8.4 M15 3l-1.4 8.4 M10.4 11.4h3.2l-.6 8.6h-2z" },
+        { num: "04", title: "Dečja stomatologija", desc: "Mlečni zubi i prvi pregledi. Bez žurbe, da dete ne dobije strah od zubara.", icon: "M12 20s-6.5-4.4-8.5-8.3C2 8.8 3.6 6 6.4 6c1.7 0 3 .9 3.6 2 .6-1.1 1.9-2 3.6-2 2.8 0 4.4 2.8 2.9 5.7C18.5 15.6 12 20 12 20z" },
+        { num: "05", title: "Lečenje kanala korena", desc: "Kad karijes dođe do živca. Očistimo kanal i zapušimo, da zadržite svoj zub.", icon: "M12 3.5c3 3.6 5 6 5 8.5a5 5 0 0 1-10 0c0-2.5 2-4.9 5-8.5z" },
+        { num: "06", title: "Protetika", desc: "Krunice, mostovi i proteze. Kad fali zub ili je previše oštećen za plombu.", icon: "M4 8.5l3.5 2.5L12 5l4.5 6L20 8.5 18 17.5H6z M6.4 20.5h11.2" }
+      ],
+      aboutPoints: [
+        "Isti doktor vas leči svih 17 godina",
+        "Cenu i plan kažemo pre nego što počnemo",
+        "Termin dobijete za par dana, ne za mesece",
+        "Sa decom radimo strpljivo, bez straha"
+      ],
+      tier1: tier1,
+      tier2: tier2,
+      tier3: tier3
+    };
+  }
+}
+</script>
+</body>
+</html>
