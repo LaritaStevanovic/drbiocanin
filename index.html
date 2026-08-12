@@ -109,6 +109,15 @@
     @keyframes drawerIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
     .reveal { opacity: 0; transition: opacity .7s ease; }
     @media (min-width: 769px) { .reveal { transform: none !important; } }
+    @media (min-width: 769px) {
+      #usluge, #cenovnik, #o-nama, #kontakt {
+        min-height: calc(100vh - 68px) !important;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center !important;
+        align-items: stretch !important;
+      }
+    }
     .svc-hint { display: none; }
     .svc-dots { display: none; }
     @media (max-width: 768px) { .svc-dots { display: flex !important; } }
@@ -451,7 +460,7 @@
           <div style="font-size:14px; color:#8fa1ad;">Stomatološka ordinacija, Borča</div>
         </div>
       </div>
-      <div class="footer-copy" style="font-size:14px; color:#8fa1ad; text-align:right; margin-right:10px;">© 2009 Ordinacija Dr. Biočanin</div>
+      <div class="footer-copy" style="font-size:14px; color:#8fa1ad; text-align:right; margin-right:30px;">© 2009 Ordinacija Dr. Biočanin</div>
     </div>
   </footer>
 
@@ -507,17 +516,8 @@ class Component extends DCLogic {
     const scrollToSection = (id) => {
       const el = document.getElementById(id);
       if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const absTop = rect.top + window.scrollY;
-      const secH = rect.height;
-      const avail = window.innerHeight - navH;
-      let top;
-      if (secH <= avail) {
-        top = absTop - navH - (avail - secH) / 2;
-      } else {
-        top = absTop - navH;
-      }
-      window.scrollTo({ top: Math.max(0, Math.round(top)), behavior: 'smooth' });
+      const absTop = el.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: Math.max(0, Math.round(absTop - navH)), behavior: 'smooth' });
       if (history.replaceState) history.replaceState(null, '', '#' + id);
     };
     this._scrollToSection = scrollToSection;
@@ -552,6 +552,13 @@ class Component extends DCLogic {
         a.style.color = on ? '#5db4f0' : '#c7d3db';
         a.style.fontWeight = on ? '700' : '500';
       });
+      if (history.replaceState) {
+        if (window.scrollY < 80) {
+          if (window.location.hash) history.replaceState(null, '', window.location.pathname + window.location.search);
+        } else if (active) {
+          history.replaceState(null, '', '#' + active);
+        }
+      }
     };
     this._spy = spy;
     window.addEventListener('scroll', spy, { passive: true });
