@@ -48,6 +48,8 @@
       section { padding: 56px 0; }
       .wrap { padding: 0 20px; }
       .nav-links { display: none !important; }
+      .reveal { transform: translateY(34px); transition: opacity .7s ease, transform .7s ease; }
+      .reveal.in { transform: none; }
       .nav-toggle { display: inline-flex !important; }
       .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
       #pocetna { display: block !important; min-height: 0 !important; padding-top: 0 !important; padding-bottom: 40px !important; }
@@ -105,7 +107,8 @@
     }
     @keyframes fillUp { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
     @keyframes drawerIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-    .reveal { opacity: 0; transform: translateY(34px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal { opacity: 0; transition: opacity .7s ease; }
+    @media (min-width: 769px) { .reveal { transform: none !important; } }
     .svc-hint { display: none; }
     .svc-dots { display: none; }
     @media (max-width: 768px) { .svc-dots { display: flex !important; } }
