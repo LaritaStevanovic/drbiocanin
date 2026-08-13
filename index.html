@@ -44,6 +44,9 @@
     .cta-sheen { position: relative; overflow: hidden; }
     .cta-sheen::after { content: ""; position: absolute; top: 0; left: -60%; width: 45%; height: 100%; background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%); transform: skewX(-18deg); pointer-events: none; opacity: 0; }
     .cta-sheen:hover::after { opacity: 1; animation: btnSheen 0.7s ease; }
+    @keyframes navSheen { 0% { left: -60%; opacity: 0; } 3% { opacity: 1; } 18% { left: 130%; opacity: 1; } 19%, 100% { left: 130%; opacity: 0; } }
+    .nav-call::after { animation: navSheen 6s ease-in-out infinite; opacity: 0; }
+    .nav-call:hover::after { animation: navSheen 6s ease-in-out infinite; }
     @media (max-width: 768px) {
       section { padding: 56px 0; }
       .wrap { padding: 0 20px; }
@@ -59,6 +62,7 @@
       header img { height: 54px !important; }
       header .wrap a span { font-size: 15px !important; margin-left: -8px !important; }
       .hero-veil { display: none !important; }
+      .hero-fade { display: none !important; }
       .hero-h1 { font-size: 40px !important; }
       .about-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
       #o-nama { min-height: 0 !important; }
@@ -104,8 +108,34 @@
       .tier-card .tier-list { display: none !important; }
       .tier-card.open .tier-list { display: flex !important; }
       .tier-card.open .tier-chev { transform: rotate(180deg); }
+      .hero-topshade { display: none !important; }
+      .tier-topshade { display: none; }
+      .tier-dots { display: none !important; }
+      .tier-chev-btn { display: flex !important; }
+      .footer-copy { margin-right: 0 !important; }
     }
     @keyframes fillUp { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+    .tier-card { position: relative; overflow: hidden; }
+    .tier-card > *:not(.tier-deco):not(.tier-dots):not(.tier-chev-btn) { position: relative; z-index: 1; }
+    .tier-deco { position: absolute; border-radius: 50%; z-index: 0; pointer-events: none; }
+    .tier-dots { display: none; position: absolute; top: 50%; right: 20px; transform: translateY(-50%); width: 36px; height: 36px; z-index: 2; }
+    .tier-chev-btn { display: none; position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; border-radius: 50%; background: #0b73c8; align-items: center; justify-content: center; z-index: 2; animation: chevBounce 1.8s ease-in-out infinite; }
+    .tier-featured .tier-chev-btn { background: #0b73c8; }
+    @keyframes chevBounce { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 4px); } }
+    .tier-dots span { position: absolute; top: 50%; left: 50%; border-radius: 50%; transform: translate(-50%, -50%); }
+    .tier-dots span:nth-child(1) { width: 36px; height: 36px; background: transparent; border: 2px solid rgba(11,115,200,0.5); box-sizing: border-box; animation: tierPulse 1.8s ease-in-out infinite; }
+    .tier-dots span:nth-child(2) { width: 15px; height: 15px; background: transparent; border: 2px solid #0b73c8; box-sizing: border-box; animation: tierPulse 1.8s ease-in-out infinite; }
+    .tier-featured .tier-dots span:nth-child(1) { border-color: rgba(91,180,240,0.6); background: transparent; }
+    .tier-featured .tier-dots span:nth-child(2) { border-color: #5db4f0; background: transparent; }
+    @keyframes tierPulse { 0%, 100% { transform: translate(-50%, -50%) scale(0.9); opacity: .7; } 50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; } }
+    @keyframes revMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .rev-viewport { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%); }
+    .rev-track { display: flex; gap: 24px; width: max-content; padding: 14px 0; animation: revMarquee 40s linear infinite; }
+    .rev-viewport:hover .rev-track { animation-play-state: paused; }
+    .rev-card { flex: 0 0 360px; box-sizing: border-box; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+    .rev-card:hover { transform: scale(1.04); box-shadow: 0 16px 40px rgba(11,58,102,0.12); border-color: #1697e8 !important; }
+    @media (prefers-reduced-motion: reduce) { .rev-track { animation: none; } }
+    @media (max-width: 768px) { .rev-card { flex-basis: 280px; } .rev-track { animation-duration: 30s; } }
     @keyframes drawerIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
     .reveal { opacity: 0; transition: opacity .7s ease; }
     @media (min-width: 769px) { .reveal { transform: none !important; } }
@@ -150,7 +180,7 @@
 
   <header style="position:sticky; top:0; z-index:50; background:rgba(11,58,102,0.86); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid rgba(22,151,232,0.35);">
     <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; height:68px; max-width:none; width:100%; padding:0 20px;">
-      <a href="#pocetna" onClick="{{ scrollTop }}" style="display:flex; align-items:center; gap:0; color:#ffffff;">
+      <a href="#pocetna" onClick="{{ scrollTop }}" id="nav-brand" style="display:flex; align-items:center; gap:0; color:#ffffff;">
         <img src="assets/logo.png" alt="Logo ordinacije Dr. Biočanin" style="height:50px; width:auto;">
         <span style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:18px; letter-spacing:-0.01em; color:#ffffff; margin-top:-4px;">Dr. Biočanin</span>
       </a>
@@ -159,8 +189,7 @@
         <a href="#cenovnik" data-spy="cenovnik" style="color:#c7d3db; font-weight:500; transition:color .15s;" style-hover="color:#5db4f0;">Cenovnik</a>
         <a href="#o-nama" data-spy="o-nama" style="color:#c7d3db; font-weight:500; transition:color .15s;" style-hover="color:#5db4f0;">O nama</a>
         <a href="#kontakt" data-spy="kontakt" style="color:#c7d3db; font-weight:500; transition:color .15s;" style-hover="color:#5db4f0;">Kako do nas</a>
-        <a href="tel:0113328131" onClick="{{ openContact }}" class="nav-call cta-sheen" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; background:#0b73c8; color:#fff; font-weight:600; padding:11px 22px; border-radius:999px; cursor:pointer; transition:background .15s;" style-hover="background:#1697e8;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        <a href="tel:0113328131" onClick="{{ openContact }}" id="nav-call" class="nav-call cta-sheen" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; background:#0b73c8; color:#fff; font-weight:600; padding:11px 22px; border-radius:999px; cursor:pointer; transition:background .15s;" style-hover="background:#1697e8;">
           Kontaktirajte nas
         </a>
       </nav>
@@ -183,8 +212,7 @@
         <a href="#cenovnik" data-spy-m="cenovnik" onClick="{{ closeMenu }}" style="padding:15px 0; color:#c7d3db; font-weight:500; font-size:17px; border-bottom:1px solid #1b3547;">Cenovnik</a>
         <a href="#o-nama" data-spy-m="o-nama" onClick="{{ closeMenu }}" style="padding:15px 0; color:#c7d3db; font-weight:500; font-size:17px; border-bottom:1px solid #1b3547;">O nama</a>
         <a href="#kontakt" data-spy-m="kontakt" onClick="{{ closeMenu }}" style="padding:15px 0; color:#c7d3db; font-weight:500; font-size:17px; border-bottom:1px solid #1b3547;">Kako do nas</a>
-        <a href="tel:0113328131" style="margin-top:24px; display:flex; align-items:center; justify-content:center; gap:8px; background:#0b73c8; color:#fff; font-weight:600; font-size:16px; padding:14px 20px; border-radius:8px;">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        <a href="tel:0113328131" class="nav-call cta-sheen" style="margin-top:24px; display:flex; align-items:center; justify-content:center; gap:8px; background:#0b73c8; color:#fff; font-weight:600; font-size:16px; padding:14px 20px; border-radius:999px;">
           Pozovite 011 3328131
         </a>
       </div>
@@ -262,7 +290,9 @@
 
   <section id="pocetna" style="position:relative; overflow:hidden; min-height:calc(100vh - 69px); display:flex; align-items:center; padding-top:64px; padding-bottom:64px; border-top:1px solid #17384d; box-shadow:inset 0 1px 0 rgba(255,255,255,0.06); background:#ffffff;">
     <img class="hero-photo" src="assets/hero.jpg" alt="Nasmejana pacijentkinja" style="position:absolute; top:0; right:0; height:100%; width:auto; max-width:none; object-fit:cover; object-position:left center; z-index:0;">
+    <div class="hero-topshade" style="display:none;"></div>
     <div class="hero-veil" style="position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(90deg, #ffffff 0%, rgba(255,255,255,0.92) 34%, rgba(255,255,255,0.15) 58%, rgba(255,255,255,0) 72%);"></div>
+    <div class="hero-fade" style="position:absolute; left:0; right:0; bottom:0; height:160px; z-index:2; pointer-events:none; background:linear-gradient(180deg, rgba(246,249,251,0) 0%, rgba(246,249,251,0.75) 65%, #f6f9fb 100%);"></div>
     <div class="wrap" style="width:100%; position:relative; z-index:2;">
       <div class="hero-grid" style="display:grid; grid-template-columns:1fr; gap:64px; align-items:stretch;">
         <div style="max-width:560px;">
@@ -282,7 +312,7 @@
     </div>
   </section>
 
-  <section id="usluge" class="reveal" style="background:#f6f9fb; border-top:1px solid #e6ecf0; border-bottom:1px solid #e6ecf0;">
+  <section id="usluge" class="reveal" style="background:#f6f9fb; border-bottom:1px solid #e6ecf0;">
     <div class="wrap">
       <div style="max-width:600px; margin-bottom:52px;">
         <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:14px; letter-spacing:0.08em; text-transform:uppercase; color:#39a84e; margin-bottom:14px;">Usluge</div>
@@ -319,10 +349,13 @@
       <div class="tier-grid" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:22px; align-items:stretch;">
 
         <div class="tier-card" onClick="{{ openTier }}" data-tier="0" style="display:flex; flex-direction:column; background:#f6faff; border:2px solid #0b73c8; border-radius:20px; padding:34px 32px; transition:transform .2s, box-shadow .2s;" style-hover="transform:scale(1.05); box-shadow:0 18px 44px rgba(11,58,102,0.16);">
+          <span class="tier-deco" style="width:150px; height:150px; top:-54px; right:-46px; background:rgba(11,115,200,0.06);"></span>
+          <span class="tier-deco" style="width:90px; height:90px; bottom:-30px; left:-28px; background:rgba(57,168,78,0.06);"></span>
           <div style="width:52px; height:52px; border-radius:14px; background:#0b73c8; display:flex; align-items:center; justify-content:center; margin-bottom:26px;">
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4c-1.3-1.2-3-1.6-4.5-1.1C5.6 3.5 4.5 5.4 4.5 7.9c0 1.7.4 3.3.9 5.1.4 1.6.6 4.5 1.8 4.5 1.1 0 1.3-2.3 1.6-4.2.3-1.5.5-2.9 1.2-2.9s.9 1.4 1.2 2.9c.3 1.9.5 4.2 1.6 4.2 1.2 0 1.4-2.9 1.8-4.5.5-1.8.9-3.4.9-5.1 0-2.5-1.1-4.4-3-4.9C15 2.4 13.3 2.8 12 4z"></path></svg>
           </div>
           <h3 style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:23px; letter-spacing:-0.01em; margin-bottom:18px; color:#123246;">Pregled i osnovna nega</h3>
+          <div class="tier-chev-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
           <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:38px; letter-spacing:-0.02em; color:#0b73c8; line-height:1;">od 1.500 din</div>
           <div style="font-size:14px; color:#6a7883; margin-top:8px; margin-bottom:26px;">početna cena</div>
           <button class="tier-arrow" onClick="{{ toggleTier }}" aria-label="Prikaži cene" style="display:none; margin-top:20px; width:100%; align-items:center; justify-content:center; gap:6px; background:transparent; border:1px solid #d6e6f5; border-radius:8px; padding:10px; cursor:pointer; color:#0b73c8; font-weight:600; font-size:14px;"><span>Prikaži</span><svg class="tier-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0b73c8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
@@ -339,10 +372,13 @@
         </div>
 
         <div class="tier-card tier-featured" onClick="{{ openTier }}" data-tier="1" style="position:relative; display:flex; flex-direction:column; background:#0e2230; border:2px solid #0e2230; border-radius:20px; padding:34px 32px; box-shadow:0 20px 50px rgba(11,58,102,0.22); transition:transform .2s;" style-hover="transform:scale(1.06);">
+          <span class="tier-deco" style="width:160px; height:160px; top:-58px; right:-50px; background:rgba(255,255,255,0.05);"></span>
+          <span class="tier-deco" style="width:100px; height:100px; bottom:-34px; left:-30px; background:rgba(91,180,240,0.08);"></span>
           <div style="width:52px; height:52px; border-radius:14px; background:#0b73c8; display:flex; align-items:center; justify-content:center; margin-bottom:26px;">
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 5.2C9.4 4.2 7.9 3.9 6.7 4.3 5.2 4.8 4.3 6.4 4.3 8.5c0 1.4.3 2.8.8 4.3.3 1.4.5 3.8 1.5 3.8.9 0 1.1-2 1.3-3.6.3-1.3.4-2.5 1-2.5s.8 1.2 1 2.5c.3 1.6.4 3.6 1.4 3.6.9 0 1.2-2.4 1.5-3.8.4-1.5.7-2.9.7-4.3 0-2.1-.9-3.7-2.4-4.2-1.2-.4-2.6-.1-3.8.9z"></path><path d="M18.4 4.1l.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6z"></path><path d="M20.3 9.6l.4 1.2 1.2.4-1.2.4-.4 1.2-.4-1.2-1.2-.4 1.2-.4z"></path></svg>
           </div>
           <h3 style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:23px; letter-spacing:-0.01em; margin-bottom:18px; color:#fff;">Estetika osmeha</h3>
+          <div class="tier-chev-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
           <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:38px; letter-spacing:-0.02em; color:#fff; line-height:1;">od 15.000 din</div>
           <div style="font-size:14px; color:#8fa1ad; margin-top:8px; margin-bottom:26px;">početna cena</div>
           <button class="tier-arrow" onClick="{{ toggleTier }}" aria-label="Prikaži cene" style="display:none; margin-top:20px; width:100%; align-items:center; justify-content:center; gap:6px; background:transparent; border:1px solid #1f3a4d; border-radius:8px; padding:10px; cursor:pointer; color:#5db4f0; font-weight:600; font-size:14px;"><span>Prikaži</span><svg class="tier-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5db4f0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
@@ -359,10 +395,13 @@
         </div>
 
         <div class="tier-card" onClick="{{ openTier }}" data-tier="2" style="display:flex; flex-direction:column; background:#f6faff; border:2px solid #0b73c8; border-radius:20px; padding:34px 32px; transition:transform .2s, box-shadow .2s;" style-hover="transform:scale(1.05); box-shadow:0 18px 44px rgba(11,58,102,0.16);">
+          <span class="tier-deco" style="width:150px; height:150px; top:-52px; left:-48px; background:rgba(11,115,200,0.06);"></span>
+          <span class="tier-deco" style="width:88px; height:88px; bottom:-28px; right:-26px; background:rgba(57,168,78,0.06);"></span>
           <div style="width:52px; height:52px; border-radius:14px; background:#0b73c8; display:flex; align-items:center; justify-content:center; margin-bottom:26px;">
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.2 4h7.6l-1.1 5H9.3z"></path><path d="M9.6 9l.7 7a1.7 1.7 0 0 0 3.4 0l.7-7"></path><line x1="9.9" y1="11.4" x2="14.1" y2="11.4"></line><line x1="10.1" y1="13.3" x2="13.9" y2="13.3"></line><line x1="10.4" y1="15.2" x2="13.6" y2="15.2"></line></svg>
           </div>
           <h3 style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:23px; letter-spacing:-0.01em; margin-bottom:18px; color:#123246;">Protetika i hirurgija</h3>
+          <div class="tier-chev-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
           <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:38px; letter-spacing:-0.02em; color:#0b73c8; line-height:1;">od 6.000 din</div>
           <div style="font-size:14px; color:#6a7883; margin-top:8px; margin-bottom:26px;">početna cena</div>
           <button class="tier-arrow" onClick="{{ toggleTier }}" aria-label="Prikaži cene" style="display:none; margin-top:20px; width:100%; align-items:center; justify-content:center; gap:6px; background:transparent; border:1px solid #d6e6f5; border-radius:8px; padding:10px; cursor:pointer; color:#0b73c8; font-weight:600; font-size:14px;"><span>Prikaži</span><svg class="tier-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0b73c8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
@@ -394,25 +433,43 @@
           <p style="font-size:18px; color:#4a5964; max-width:60ch; margin-bottom:18px; text-wrap:pretty;">Ordinacija Dr. Biočanin radi od 2009. Ista adresa, isti čovek koji vas leči. Mnogi pacijenti se vraćaju godinama i dovode celu porodicu.</p>
           <p style="font-size:18px; color:#4a5964; max-width:60ch; margin-bottom:28px; text-wrap:pretty;">Prvo objasnimo šta se dešava, pa tek onda radimo. Bez žurbe.</p>
           <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-top:28px;">
-            <a href="tel:0113328131" onClick="{{ openContact }}" class="cta-sheen" style="display:inline-flex; align-items:center; gap:9px; background:#0b73c8; color:#fff; font-weight:600; font-size:16px; padding:14px 24px; border-radius:8px; cursor:pointer; transition:background .15s, transform .15s;" style-hover="background:#1697e8; transform:translateY(-1px);">Zakažite pregled</a>
-            <a href="https://www.google.com/maps/place/Dr+Biocanin/@44.8842444,20.455067,17z/data=!4m17!1m8!3m7!1s0x475a637e15173817:0xd3d502166a6a2037!2zUmFua2EgTWlsamnEh2EgODEsIEJvcsSNYQ!3b1!8m2!3d44.8842444!4d20.455067!16s%2Fg%2F11kx2xyh_b!3m7!1s0x475a64bdde190725:0x91ba242a605987c2!8m2!3d44.8842163!4d20.4550018!9m1!1b1!16s%2Fg%2F11_r8mjdz?entry=ttu" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:10px; padding:14px 20px; border:1px solid #e2e8ec; border-radius:8px; background:#fff; transition:border-color .15s, transform .15s;" style-hover="border-color:#1697e8; transform:translateY(-1px);">
-              <span style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:17px; color:#123246; line-height:1;">4.9</span>
-              <span style="display:inline-flex; gap:1px;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5a623"><polygon points="12,2 15,9 22,9.3 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.3 9,9"></polygon></svg>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5a623"><polygon points="12,2 15,9 22,9.3 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.3 9,9"></polygon></svg>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5a623"><polygon points="12,2 15,9 22,9.3 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.3 9,9"></polygon></svg>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5a623"><polygon points="12,2 15,9 22,9.3 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.3 9,9"></polygon></svg>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5a623"><polygon points="12,2 15,9 22,9.3 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.3 9,9"></polygon></svg>
-              </span>
-              <span style="font-size:15px; color:#0b73c8; font-weight:600; white-space:nowrap;">Pogledaj recenzije</span>
-            </a>
+            <a href="tel:0113328131" onClick="{{ zakaziClick }}" class="cta-sheen" style="display:inline-flex; align-items:center; gap:9px; background:#0b73c8; color:#fff; font-weight:600; font-size:16px; padding:14px 24px; border-radius:8px; cursor:pointer; transition:background .15s, transform .15s;" style-hover="background:#1697e8; transform:translateY(-1px);">Zakažite pregled</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="kontakt" class="reveal">
+  <section id="recenzije" class="reveal" style="background:#ffffff;">
+    <div class="wrap" style="text-align:center; margin-bottom:52px;">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:14px; letter-spacing:0.08em; text-transform:uppercase; color:#39a84e; margin-bottom:14px;">Utisci pacijenata</div>
+      <h2 style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:38px; line-height:1.12; letter-spacing:-0.02em; color:#123246;">Pacijenti nam veruju</h2>
+    </div>
+    <div class="rev-viewport">
+      <div class="rev-track">
+        <sc-for list="{{ reviewsLoop }}" as="r" hint-placeholder-count="10">
+          <div class="rev-card" style="background:#fff; border:1px solid #e2e8ec; border-radius:16px; padding:30px 30px 26px; display:flex; flex-direction:column;">
+            <div style="display:flex; gap:3px; margin-bottom:18px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#f5843c"><polygon points="12,2 15,9 22,9.3 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.3 9,9"></polygon></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#f5843c"><polygon points="12,2 15,9 22,9.3 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.3 9,9"></polygon></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#f5843c"><polygon points="12,2 15,9 22,9.3 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.3 9,9"></polygon></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#f5843c"><polygon points="12,2 15,9 22,9.3 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.3 9,9"></polygon></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#f5843c"><polygon points="12,2 15,9 22,9.3 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.3 9,9"></polygon></svg>
+            </div>
+            <p style="font-size:17px; color:#2c3a44; line-height:1.55; margin-bottom:24px; text-wrap:pretty;">{{ r.text }}</p>
+            <div style="display:flex; align-items:center; gap:13px; margin-top:auto;">
+              <span style="width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:16px; background:{{ r.bg }}; color:{{ r.fg }};">{{ r.initial }}</span>
+              <div>
+                <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:16px; color:#123246;">{{ r.name }}</div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt" class="reveal" style="background:#f6f9fb; border-top:1px solid #e6ecf0;">
     <div class="wrap">
       <div class="contact-grid" style="display:grid; grid-template-columns:1fr 1.2fr; gap:56px; align-items:center;">
         <div>
@@ -589,12 +646,21 @@ class Component extends DCLogic {
       "Oralna hirurgija",
       "Za kompletnu obnovu zuba"
     ];
+    const reviews = [
+      { text: "Prvi put da mi plomba ne ispadne posle par meseci. Sve mi objasnio pre nego što je počeo.", name: "Marija P.", role: "pacijentkinja", initial: "M", bg: "#e3f4e8", fg: "#2f9a45" },
+      { text: "Vadio sam umnjak i mislio da će biti strašno. Nije boleo i gotovo za desetak minuta.", name: "Stefan D.", role: "pacijent", initial: "S", bg: "#fdeadf", fg: "#e07b3c" },
+      { text: "Izbeljivanje je ispalo tačno kako sam želela. Osmeh svetliji, a zubi bez osetljivosti.", name: "Ivana K.", role: "pacijentkinja", initial: "I", bg: "#e6edfb", fg: "#3a6fd0" },
+      { text: "Vodim decu ovde godinama. Nikad nisu plakala, doktor stvarno ima strpljenja.", name: "Nikola M.", role: "pacijent", initial: "N", bg: "#eae6fb", fg: "#6a4fd0" },
+      { text: "Krunica se ne razlikuje od pravog zuba. Cenu rekli unapred, bez naknadnih iznenađenja.", name: "Jelena R.", role: "pacijentkinja", initial: "J", bg: "#e3f4e8", fg: "#2f9a45" }
+    ];
     return {
+      reviewsLoop: reviews.concat(reviews),
       menuOpen: this.state.menuOpen,
       contactOpen: this.state.contactOpen,
       toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen }), () => { if (this._spy) requestAnimationFrame(() => this._spy()); }),
       closeMenu: () => this.setState({ menuOpen: false }),
       openContact: (e) => { if (e) e.preventDefault(); this.setState({ contactOpen: true, menuOpen: false }); },
+      zakaziClick: (e) => { if (window.matchMedia('(max-width: 768px)').matches) return; if (e) e.preventDefault(); this.setState({ contactOpen: true, menuOpen: false }); },
       closeContact: () => this.setState({ contactOpen: false }),
       stop: (e) => { if (e) e.stopPropagation(); },
       svcModal: this.state.svcModal,
