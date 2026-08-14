@@ -190,7 +190,10 @@ export const bodyHTML = `
           </div>
         </div>
         <a href="https://www.google.com/maps/search/?api=1&query=Ranka+Milji%C4%87a+81,+Bor%C4%8Da,+Beograd" target="_blank" rel="noopener" style="position:relative; display:block; aspect-ratio:16/11; border:1px solid #dde4e9; border-radius:12px; overflow:hidden;">
-          <iframe title="Mapa - Ranka Miljića 81, Borča" src="https://www.google.com/maps?q=Ranka%20Milji%C4%87a%2081%2C%20Bor%C4%8Da%2C%20Beograd&output=embed" style="width:100%; height:100%; border:0; display:block; pointer-events:none; filter:grayscale(0.4) sepia(0.35) hue-rotate(165deg) saturate(1.4) brightness(1.02);" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div aria-label="Mapa - Ranka Miljića 81, Borča" style="position:absolute; inset:0; background:linear-gradient(135deg,#dfeaf3 0%,#eef4f8 45%,#e5eff5 100%);"></div>
+          <div style="position:absolute; inset:0; opacity:0.5; background-image:linear-gradient(#c7d8e4 1px,transparent 1px),linear-gradient(90deg,#c7d8e4 1px,transparent 1px); background-size:38px 38px;"></div>
+          <div style="position:absolute; top:0; bottom:0; left:38%; width:12px; background:#cde0d2; transform:skewX(-12deg);"></div>
+          <div style="position:absolute; left:0; right:0; top:56%; height:16px; background:#f4d9a8;"></div>
           <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-78%); pointer-events:none; filter:drop-shadow(0 4px 6px rgba(0,0,0,0.35));"><svg width="56" height="70" viewBox="0 0 46 58" fill="none"><path d="M23 2C11.4 2 2 11.4 2 23c0 15 21 33 21 33s21-18 21-33C44 11.4 34.6 2 23 2z" fill="#0b73c8" stroke="#fff" stroke-width="2.5"></path><g transform="translate(12.7,13) scale(0.98)"><path d="M12 4c-1.3-1.2-3-1.6-4.5-1.1C5.6 3.5 4.5 5.4 4.5 7.9c0 1.7.4 3.3.9 5.1.4 1.6.6 4.5 1.8 4.5 1.1 0 1.3-2.3 1.6-4.2.3-1.5.5-2.9 1.2-2.9s.9 1.4 1.2 2.9c.3 1.9.5 4.2 1.6 4.2 1.2 0 1.4-2.9 1.8-4.5.5-1.8.9-3.4.9-5.1 0-2.5-1.1-4.4-3-4.9C15 2.4 13.3 2.8 12 4z" fill="#fff"></path></g></svg></div>
           <div style="position:absolute; left:16px; bottom:16px; display:inline-flex; align-items:center; gap:8px; background:#0b73c8; color:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:14px; padding:9px 15px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.18);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Otvori u Google mapama</div>
         </a>
@@ -202,7 +205,7 @@ export const bodyHTML = `
     <div class="footer-wrap" style="max-width:none; width:100%; margin:0; padding:44px 20px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
       <div class="footer-brand" style="display:flex; align-items:center; gap:0;">
         <img src="${B}assets/logo.png" alt="Logo" width="60" height="54" style="height:31px; width:auto;">
-        <div class="footer-name"><div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:16px; color:#fff;">Dr. Biočanin</div><div style="font-size:14px; color:#8fa1ad;">Stomatološka ordinacija, Borča</div></div>
+        <div class="footer-name" style="margin-left:14px;"><div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:16px; color:#fff;">Dr. Biočanin</div><div style="font-size:14px; color:#8fa1ad;">Stomatološka ordinacija, Borča</div></div>
       </div>
       <div class="footer-copy" style="font-size:14px; color:#8fa1ad; text-align:right; margin-right:30px;">© 2009 Ordinacija Dr. Biočanin</div>
     </div>
