@@ -18,6 +18,7 @@ export const reviews = [
   { text: "Krunica se ne razlikuje od pravog zuba. Cenu rekli unapred, bez naknadnih iznenađenja.", name: "Jelena R.", initial: "J", bg: "#e3f4e8", fg: "#2f9a45" }
 ];
 
+const B = import.meta.env.BASE_URL;
 const star = '<svg width="18" height="18" viewBox="0 0 24 24" fill="#f5843c"><polygon points="12,2 15,9 22,9.3 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.3 9,9"></polygon></svg>';
 const check = (col) => `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="${col}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
 const phoneSvg = (c, w) => `<svg width="${w}" height="${w}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>`;
@@ -59,7 +60,7 @@ export const bodyHTML = `
   <header style="position:sticky; top:0; z-index:50; background:rgba(11,58,102,0.86); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid rgba(22,151,232,0.35);">
     <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; height:68px; max-width:none; width:100%; padding:0 20px;">
       <a href="#pocetna" id="nav-brand" style="display:flex; align-items:center; gap:0; color:#ffffff;">
-        <img src="/assets/logo.png" alt="Logo ordinacije Dr. Biočanin" width="60" height="54" style="height:26px; width:auto;">
+        <img src="${B}assets/logo.png" alt="Logo ordinacije Dr. Biočanin" width="60" height="54" style="height:26px; width:auto;">
         <span style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:18px; letter-spacing:-0.01em; color:#ffffff; margin-top:-4px; margin-left:10px;">Dr. Biočanin</span>
       </a>
       <nav class="nav-links" style="display:flex; align-items:center; gap:34px;">
@@ -76,7 +77,7 @@ export const bodyHTML = `
   </header>
 
   <section id="pocetna" style="position:relative; overflow:hidden; min-height:calc(100vh - 69px); display:flex; align-items:center; padding-top:64px; padding-bottom:64px; border-top:1px solid #17384d; box-shadow:inset 0 1px 0 rgba(255,255,255,0.06); background:#ffffff;">
-    <img class="hero-photo" src="/assets/hero.jpg" alt="Nasmejana pacijentkinja u stomatološkoj ordinaciji Dr. Biočanin" width="1600" height="897" fetchpriority="high" decoding="async" style="position:absolute; top:0; right:0; height:100%; width:auto; max-width:none; object-fit:cover; object-position:left center; z-index:0;">
+    <img class="hero-photo" src="${B}assets/hero.jpg" alt="Nasmejana pacijentkinja u stomatološkoj ordinaciji Dr. Biočanin" width="1600" height="897" fetchpriority="high" decoding="async" style="position:absolute; top:0; right:0; height:100%; width:auto; max-width:none; object-fit:cover; object-position:left center; z-index:0;">
     <div class="hero-veil" style="position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(90deg, #ffffff 0%, rgba(255,255,255,0.92) 34%, rgba(255,255,255,0.15) 58%, rgba(255,255,255,0) 72%);"></div>
     <div class="hero-fade" style="position:absolute; left:0; right:0; bottom:0; height:160px; z-index:2; pointer-events:none; background:linear-gradient(180deg, rgba(246,249,251,0) 0%, rgba(246,249,251,0.75) 65%, #f6f9fb 100%);"></div>
     <div class="wrap" style="width:100%; position:relative; z-index:2;">
@@ -153,7 +154,7 @@ export const bodyHTML = `
     <div class="wrap" style="width:100%;">
       <div class="about-grid" style="display:grid; grid-template-columns:1fr 1.1fr; gap:56px; align-items:center; min-height:0;">
         <div style="aspect-ratio:4/5; border:1px solid #dde4e9; border-radius:12px; overflow:hidden;">
-          <img src="/assets/doktor.jpg" alt="Dr. Biočanin, stomatolog" width="1000" height="1000" loading="lazy" decoding="async" style="width:100%; height:100%; object-fit:cover; object-position:center;">
+          <img src="${B}assets/doktor.jpg" alt="Dr. Biočanin, stomatolog" width="1000" height="1000" loading="lazy" decoding="async" style="width:100%; height:100%; object-fit:cover; object-position:center;">
         </div>
         <div>
           <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:14px; letter-spacing:0.08em; text-transform:uppercase; color:#237a3a; margin-bottom:14px;">O nama</div>
@@ -200,7 +201,7 @@ export const bodyHTML = `
   <footer style="background:#0e2230; color:#c7d3db;">
     <div class="footer-wrap" style="max-width:none; width:100%; margin:0; padding:44px 20px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
       <div class="footer-brand" style="display:flex; align-items:center; gap:0;">
-        <img src="/assets/logo.png" alt="Logo" width="60" height="54" style="height:31px; width:auto;">
+        <img src="${B}assets/logo.png" alt="Logo" width="60" height="54" style="height:31px; width:auto;">
         <div class="footer-name"><div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:16px; color:#fff;">Dr. Biočanin</div><div style="font-size:14px; color:#8fa1ad;">Stomatološka ordinacija, Borča</div></div>
       </div>
       <div class="footer-copy" style="font-size:14px; color:#8fa1ad; text-align:right; margin-right:30px;">© 2009 Ordinacija Dr. Biočanin</div>
