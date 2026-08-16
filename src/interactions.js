@@ -54,14 +54,28 @@ export function init() {
   // Mobile drawer menu
   const toggle = document.getElementById('nav-toggle');
   const drawerLink = (id, label) => `<a href="#${id}" data-nav="${id}" style="padding:15px 0; color:#c7d3db; font-weight:500; font-size:17px; border-bottom:1px solid #1b3547;">${label}</a>`;
+  const currentSection = () => {
+    const y = window.scrollY + 120; let a = ids[0];
+    for (const id of ids) { const el = document.getElementById(id); if (el && el.offsetTop <= y) a = id; }
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) a = ids[ids.length - 1];
+    return a;
+  };
   const openMenu = () => {
+    const cur = currentSection();
     const o = overlay(`<div style="position:absolute; top:0; right:0; height:100%; width:78%; max-width:320px; background:#0e2230; box-shadow:-12px 0 40px rgba(0,0,0,0.35); display:flex; flex-direction:column; padding:22px 24px; animation:drawerIn .28s ease;">
       <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;"><span style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:16px; color:#fff;">Meni</span><button data-close style="width:40px; height:40px; display:flex; align-items:center; justify-content:center; border:1px solid #274157; border-radius:8px; background:transparent; cursor:pointer;">${closeSvg('#c7d3db')}</button></div>
       ${drawerLink('usluge','Usluge')}${drawerLink('cenovnik','Cenovnik')}${drawerLink('o-nama','O nama')}${drawerLink('kontakt','Kako do nas')}
       <a href="tel:0113328131" class="nav-call cta-sheen" style="margin-top:24px; display:flex; align-items:center; justify-content:center; gap:8px; background:#0b73c8; color:#fff; font-weight:600; font-size:16px; padding:14px 20px; border-radius:999px;">Pozovite 011 3328131</a>
     </div>`);
     o.querySelector('[data-close]').addEventListener('click', () => o.remove());
-    o.querySelectorAll('[data-nav]').forEach(a => a.addEventListener('click', () => o.remove()));
+    o.querySelectorAll('[data-nav]').forEach(a => {
+      if (a.getAttribute('data-nav') === cur) { a.style.color = '#5db4f0'; a.style.fontWeight = '700'; }
+      a.addEventListener('click', () => {
+        o.querySelectorAll('[data-nav]').forEach(x => { x.style.color = '#c7d3db'; x.style.fontWeight = '500'; });
+        a.style.color = '#5db4f0'; a.style.fontWeight = '700';
+        setTimeout(() => o.remove(), 130);
+      });
+    });
   };
   if (toggle) toggle.addEventListener('click', openMenu);
 
