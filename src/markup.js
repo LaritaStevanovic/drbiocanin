@@ -77,7 +77,10 @@ export const bodyHTML = `
   </header>
 
   <section id="pocetna" style="position:relative; overflow:hidden; min-height:calc(100vh - 69px); display:flex; align-items:center; padding-top:64px; padding-bottom:64px; border-top:1px solid #17384d; box-shadow:inset 0 1px 0 rgba(255,255,255,0.06); background:#ffffff;">
-    <img class="hero-photo" src="${B}assets/hero.jpg" alt="Nasmejana pacijentkinja u stomatološkoj ordinaciji Dr. Biočanin" width="1600" height="897" fetchpriority="high" decoding="async" style="position:absolute; top:0; right:0; height:100%; width:auto; max-width:none; object-fit:cover; object-position:left center; z-index:0;">
+    <picture>
+      <source media="(max-width: 768px)" srcset="${B}assets/hero-mobile.jpg">
+      <img class="hero-photo" src="${B}assets/hero.jpg" alt="Nasmejana pacijentkinja u stomatološkoj ordinaciji Dr. Biočanin" width="1600" height="897" fetchpriority="high" decoding="async" style="position:absolute; top:0; right:0; height:100%; width:auto; max-width:none; object-fit:cover; object-position:left center; z-index:0;">
+    </picture>
     <div class="hero-veil" style="position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(90deg, #ffffff 0%, rgba(255,255,255,0.92) 34%, rgba(255,255,255,0.15) 58%, rgba(255,255,255,0) 72%);"></div>
     <div class="hero-fade" style="position:absolute; left:0; right:0; bottom:0; height:160px; z-index:2; pointer-events:none; background:linear-gradient(180deg, rgba(246,249,251,0) 0%, rgba(246,249,251,0.75) 65%, #f6f9fb 100%);"></div>
     <div class="wrap" style="width:100%; position:relative; z-index:2;">
